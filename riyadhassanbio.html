@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>Riyad Hassan Bio | river boat</title>
-  <!-- Font Awesome 6 (free) & Google Font Poppins -->
+  <title>Riyad Hassan Bio | River Boat</title>
+  
+  <!-- Bootstrap 5 (মডাল ও ফর্মের জন্য) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 & Google Font Poppins -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ---------- মূল সাইটের স্টাইল (নদী, নৌকা, বৃষ্টি) ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -25,7 +29,7 @@
       overflow-x: hidden;
     }
 
-    /* ===== RIVER BACKGROUND WITH MOVING BOAT ===== */
+    /* নদীর ব্যাকগ্রাউন্ড */
     .river-bg {
       position: fixed;
       bottom: 0;
@@ -45,7 +49,7 @@
       height: 100%;
     }
 
-    /* boat that moves left↔right continuously */
+    /* নৌকা ডানে-বামে যাওয়ার অ্যানিমেশন */
     .moving-boat {
       animation: sail 18s infinite ease-in-out;
     }
@@ -58,6 +62,7 @@
       100% { transform: translateX(0) translateY(0) rotate(0deg); }
     }
 
+    /* ঢেউয়ের অ্যানিমেশন */
     .wave {
       animation: waveMove 10s infinite alternate ease-in-out;
     }
@@ -67,7 +72,38 @@
       100% { transform: translateX(-20px) translateY(6px); }
     }
 
-    /* ===== MAIN CONTENT ===== */
+    /* বৃষ্টির অ্যানিমেশন */
+    .rain-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .raindrop {
+      position: absolute;
+      width: 1px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.6);
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+
+    /* মূল কন্টেন্ট */
+    #mainContent {
+      position: relative;
+      z-index: 5;
+    }
+
     .wrapper {
       position: relative;
       z-index: 5;
@@ -76,6 +112,7 @@
       padding: 1rem 2rem 2rem;
     }
 
+    /* নেভিগেশন বার */
     .navbar {
       display: flex;
       flex-wrap: wrap;
@@ -111,12 +148,12 @@
       transform: translateY(-2px);
     }
 
-    /* Help line icon updated with text */
-    .navbar a.help-icon {
-      font-size: 1.3rem;
-      padding: 0 0.2rem;
+    /* অথেনটিকেশন বাটন (লগইন/সাইনআপ ও প্রোফাইল) */
+    .navbar a.auth-link i {
+      color: #0d5b9a;
     }
 
+    /* সেকশন স্টাইল */
     section {
       margin: 4rem 0;
       scroll-margin-top: 5rem;
@@ -257,7 +294,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
-    /* connect grid for only 4 icons */
     .connect-grid {
       display: flex;
       flex-wrap: wrap;
@@ -330,14 +366,68 @@
       .wrapper { padding: 0.8rem 1rem; }
       .navbar { gap: 0.5rem 1rem; }
       .navbar a { font-size: 0.9rem; }
-      .navbar a.help-icon { font-size: 1.1rem; }
       h2 { font-size: 2rem; }
       .intro h1 { font-size: 2.4rem; }
+    }
+
+    /* ---------- মডালের ভিতরে ফর্মের স্টাইল ---------- */
+    .password-wrapper {
+      position: relative;
+    }
+    .password-wrapper svg {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    #passwordRules {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    #passwordRules ul {
+      margin: 4px 0 0 16px;
+      padding: 0;
+    }
+    .loader {
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* প্রোফাইল ডিভ (লুকানো থাকবে) */
+    #profileDiv {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-top: 20px;
+    }
+    #profileStars svg {
+      margin: 0 2px;
+      cursor: pointer;
+    }
+    .editBtn {
+      margin-left: 5px;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.4rem;
     }
   </style>
 </head>
 <body>
-  <!-- River background with boat moving left⇄right -->
+  <!-- নদীর ব্যাকগ্রাউন্ড -->
   <div class="river-bg">
     <svg class="river-svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
       <defs>
@@ -347,8 +437,6 @@
         </linearGradient>
       </defs>
       <rect width="1200" height="800" fill="url(#waterGrad)" />
-
-      <!-- wave layers with subtle movement -->
       <path class="wave" d="M0 600 Q150 560 300 600 T600 600 T900 600 T1200 600 V800 H0 Z" fill="#7bb8e0" opacity="0.3">
         <animate attributeName="d" dur="12s" values="M0 600 Q150 560 300 600 T600 600 T900 600 T1200 600 V800 H0 Z; M0 620 Q180 580 320 610 T600 620 T900 610 T1200 620 V800 H0 Z; M0 600 Q150 560 300 600 T600 600 T900 600 T1200 600 V800 H0 Z" repeatCount="indefinite" />
       </path>
@@ -358,16 +446,12 @@
       <path class="wave" d="M0 700 Q150 660 300 700 T600 700 T900 700 T1200 700 V800 H0 Z" fill="#3d8dc9" opacity="0.35">
         <animate attributeName="d" dur="14s" values="M0 700 Q150 660 300 700 T600 700 T900 700 T1200 700 V800 H0 Z; M0 720 Q170 680 320 720 T600 720 T900 720 T1200 720 V800 H0 Z; M0 700 Q150 660 300 700 T600 700 T900 700 T1200 700 V800 H0 Z" repeatCount="indefinite" />
       </path>
-
-      <!-- BOAT moving left to right and back -->
       <g class="moving-boat" transform="translate(200, 640) scale(1.2)">
         <path d="M -25 0 Q 0 -16 25 0 L 15 8 Q 0 14 -15 8 Z" fill="#8d6e63" stroke="#4e3b30" stroke-width="1.5" />
         <line x1="0" y1="-32" x2="0" y2="0" stroke="#4e342e" stroke-width="2.5" />
         <polygon points="0,-32 22,-12 0,-10" fill="#ffe082" opacity="0.9" />
         <circle cx="3" cy="-36" r="4" fill="#ef5350" />
       </g>
-
-      <!-- extra ripples -->
       <circle cx="900" cy="680" r="7" fill="white" opacity="0.2">
         <animate attributeName="r" values="7;11;7" dur="3s" repeatCount="indefinite" />
       </circle>
@@ -377,133 +461,452 @@
     </svg>
   </div>
 
-  <div class="wrapper">
-    <!-- navigation with all required links -->
-    <nav class="navbar">
-      <a href="#home"><i class="fas fa-home"></i> Home</a>
-      <a href="#about"><i class="fas fa-user"></i> About</a>
-      <a href="#gallery"><i class="fas fa-images"></i> Gallery</a>
-      <a href="#education"><i class="fas fa-graduation-cap"></i> Education</a>
-      <a href="#skills"><i class="fas fa-code"></i> Skills</a>
-      <a href="#connect"><i class="fas fa-heart"></i> Connect</a>
-      <!-- Help Line icon with text -->
-      <a href="https://mrhonlineauthority.github.io/mrhhelplinehome/" class="help-icon" target="_blank" title="M.R.H Help Line"><i class="fas fa-headset"></i> Help Line</a>
-    </nav>
+  <!-- বৃষ্টির কন্টেইনার -->
+  <div class="rain-container" id="rainContainer"></div>
 
-    <!-- HOME section with profile picture -->
-    <section id="home">
-      <div class="glass-card profile-row">
-        <img src="https://mrhonlineauthority.github.io/ebent/riyad.png" alt="Riyad Hassan" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Riyad+Hassan&size=140&background=1976d2&color=fff'">
-        <div class="intro">
-          <h1>Riyad Hassan</h1>
-          <div class="tagline">Student · Web Developer · Digital Creator</div>
-          <p style="margin-top:1.2rem;"><i class="fas fa-map-pin" style="color:#1976d2;"></i> Dhaka Division, Bangladesh</p>
+  <!-- মূল ওয়েবসাইটের কন্টেন্ট -->
+  <div id="mainContent">
+    <div class="wrapper">
+      <!-- নেভিগেশন বার (হেল্পলাইন + অথেনটিকেশন বাটন) -->
+      <nav class="navbar" id="mainNavbar">
+        <a href="#home"><i class="fas fa-home"></i> Home</a>
+        <a href="#about"><i class="fas fa-user"></i> About</a>
+        <a href="#gallery"><i class="fas fa-images"></i> Gallery</a>
+        <a href="#education"><i class="fas fa-graduation-cap"></i> Education</a>
+        <a href="#skills"><i class="fas fa-code"></i> Skills</a>
+        <a href="#connect"><i class="fas fa-heart"></i> Connect</a>
+        <a href="https://mrhonlineauthority.github.io/mrhhelplinehome/" class="help-icon" target="_blank" title="M.R.H Help Line"><i class="fas fa-headset"></i> Help Line</a>
+        <!-- Signup/Login বাটন (প্রাথমিক) -->
+        <a href="#" id="authToggleBtn" class="auth-link" data-bs-toggle="modal" data-bs-target="#authModal"><i class="fas fa-sign-in-alt"></i> Signup/Login</a>
+        <!-- Profile বাটন (লগইন পরে দেখা যাবে) -->
+        <a href="#" id="profileNavLink" class="auth-link" style="display: none;"><i class="fas fa-id-card"></i> Profile</a>
+      </nav>
+
+      <!-- হোম সেকশন -->
+      <section id="home">
+        <div class="glass-card profile-row">
+          <img src="https://mrhonlineauthority.github.io/ebent/riyad.png" alt="Riyad Hassan" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Riyad+Hassan&size=140&background=1976d2&color=fff'">
+          <div class="intro">
+            <h1>Riyad Hassan</h1>
+            <div class="tagline">Student · Web Developer · Digital Creator</div>
+            <p style="margin-top:1.2rem;"><i class="fas fa-map-pin" style="color:#1976d2;"></i> Dhaka Division, Bangladesh</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ABOUT section with personal information -->
-    <section id="about">
-      <h2>About me</h2>
-      <div class="glass-card about-text">
-        <p>Hi, I am Riyad Hasan. I live in Dhaka Division, Bangladesh. My educational journey began at Al-Manar Islamic Kindergarten, where I passed the Primary Education Completion Examination in 2019 with a score of 3.92.</p>
-        <p style="margin-top:1rem;">In 2020, I started my secondary education at Nurunnesa Secondary School. I completed my S.S.C. examination in 2025 with a score of 2.78. Later in 2025, I began my higher secondary education at Nurunnesa College. Due to some circumstances, I completed my H.S.C. examination in 2026.</p>
-        <p style="margin-top:1rem;">🎯 Today, I am passionate about web development and digital creation, always learning and building for the future.</p>
-      </div>
-    </section>
-
-    <!-- GALLERY section (river/boat themed) -->
-    <section id="gallery">
-      <h2>Gallery</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item"><img src="https://picsum.photos/id/1015/400/300" alt="River sunset"><p>🌅 Evening on the river</p></div>
-        <div class="gallery-item"><img src="https://picsum.photos/id/1043/400/300" alt="Wooden boat"><p>⛵ Traditional boat</p></div>
-        <div class="gallery-item"><img src="https://picsum.photos/id/1018/400/300" alt="Mountain stream"><p>🏞️ Clear water stream</p></div>
-        <div class="gallery-item"><img src="https://picsum.photos/id/100/400/300" alt="Fisherman"><p>🎣 Fisherman at dawn</p></div>
-      </div>
-    </section>
-
-    <!-- EDUCATION section -->
-    <section id="education">
-      <h2>Education</h2>
-      <div class="edu-grid">
-        <div class="edu-item">
-          <i class="fas fa-school"></i>
-          <h3>Al-Manar Islamic Kindergarten</h3>
-          <p>PEC, 2019 | GPA 3.92</p>
-          <span></span>
+      <!-- আবাউট সেকশন -->
+      <section id="about">
+        <h2>About me</h2>
+        <div class="glass-card about-text">
+          <p>Hi, I am Riyad Hasan. I live in Dhaka Division, Bangladesh. My educational journey began at Al-Manar Islamic Kindergarten, where I passed the Primary Education Completion Examination in 2019 with a score of 3.92.</p>
+          <p style="margin-top:1rem;">In 2020, I started my secondary education at Nurunnesa Secondary School. I completed my S.S.C. examination in 2025 with a score of 2.78. Later in 2025, I began my higher secondary education at Nurunnesa College. Due to some circumstances, I completed my H.S.C. examination in 2026.</p>
+          <p style="margin-top:1rem;">🎯 Today, I am passionate about web development and digital creation, always learning and building for the future.</p>
         </div>
-        <div class="edu-item">
-          <i class="fas fa-school"></i>
-          <h3>Nurunnesa Secondary School</h3>
-          <p>SSC, 2020-2025 | GPA 2.78</p>
-          <span></span>
-        </div>
-        <div class="edu-item">
-          <i class="fas fa-school"></i>
-          <h3>Nurunnesa College</h3>
-          <p>HSC, 2025-2026</p>
-          <span></span>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- SKILLS section (only HTML, CSS, JavaScript) -->
-    <section id="skills">
-      <h2>Skills & expertise</h2>
-      <div class="glass-card">
-        <div class="skills-container">
-          <span class="skill-tag">HTML</span>
-          <span class="skill-tag">CSS</span>
-          <span class="skill-tag">JavaScript</span>
+      <!-- গ্যালারি -->
+      <section id="gallery">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item"><img src="https://picsum.photos/id/1015/400/300" alt="River sunset"><p>🌅 Evening on the river</p></div>
+          <div class="gallery-item"><img src="https://picsum.photos/id/1043/400/300" alt="Wooden boat"><p>⛵ Traditional boat</p></div>
+          <div class="gallery-item"><img src="https://picsum.photos/id/1018/400/300" alt="Mountain stream"><p>🏞️ Clear water stream</p></div>
+          <div class="gallery-item"><img src="https://picsum.photos/id/100/400/300" alt="Fisherman"><p>🎣 Fisherman at dawn</p></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- CONNECT WITH ME section (all links active) -->
-    <section id="connect">
-      <h2>Connect with me</h2>
-      <div class="connect-grid">
-        <!-- Facebook -->
-        <a href="https://www.facebook.com/share/1Do9EJMEza/" class="social-circle" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <!-- YouTube -->
-        <a href="https://youtube.com/@mdriyadmediastastion?si=eDTe06XNE-SX3CHe" class="social-circle" target="_blank"><i class="fab fa-youtube"></i></a>
-        <!-- TikTok -->
-        <a href="https://www.tiktok.com/@derectorriadkhan" class="social-circle" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <!-- WhatsApp with number 01864052852 -->
-        <a href="https://wa.me/8801864052852" class="social-circle" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      </div>
-    </section>
+      <!-- শিক্ষা -->
+      <section id="education">
+        <h2>Education</h2>
+        <div class="edu-grid">
+          <div class="edu-item">
+            <i class="fas fa-school"></i>
+            <h3>Al-Manar Islamic Kindergarten</h3>
+            <p>PEC, 2019 | GPA 3.92</p>
+          </div>
+          <div class="edu-item">
+            <i class="fas fa-school"></i>
+            <h3>Nurunnesa Secondary School</h3>
+            <p>SSC, 2020-2025 | GPA 2.78</p>
+          </div>
+          <div class="edu-item">
+            <i class="fas fa-school"></i>
+            <h3>Nurunnesa College</h3>
+            <p>HSC, 2025-2026</p>
+          </div>
+        </div>
+      </section>
 
-    <!-- FOOTER with exact copyright -->
-    <footer>
-      <p>© Riyad Hassan Bio — All Rights Reserved</p>
-    </footer>
+      <!-- দক্ষতা -->
+      <section id="skills">
+        <h2>Skills & expertise</h2>
+        <div class="glass-card">
+          <div class="skills-container">
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS</span>
+            <span class="skill-tag">JavaScript</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- কানেক্ট -->
+      <section id="connect">
+        <h2>Connect with me</h2>
+        <div class="connect-grid">
+          <a href="https://www.facebook.com/share/1Do9EJMEza/" class="social-circle" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://youtube.com/@mdriyadmediastastion?si=eDTe06XNE-SX3CHe" class="social-circle" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.tiktok.com/@derectorriadkhan" class="social-circle" target="_blank"><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/8801864052852" class="social-circle" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </section>
+
+      <!-- ইউজারের প্রোফাইল ডিভ (লুকানো থাকবে) -->
+      <div id="profileDiv" style="display: none;">
+        <h2><i class="fas fa-id-card"></i> Your Profile</h2>
+        <div id="profileStars" style="text-align:center; margin-bottom:15px;">
+          <svg class="star" data-value="1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.4 8.17L12 18.896l-7.334 3.866 1.4-8.17-5.934-5.782 8.2-1.192z"/></svg>
+          <svg class="star" data-value="2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.4 8.17L12 18.896l-7.334 3.866 1.4-8.17-5.934-5.782 8.2-1.192z"/></svg>
+          <svg class="star" data-value="3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.4 8.17L12 18.896l-7.334 3.866 1.4-8.17-5.934-5.782 8.2-1.192z"/></svg>
+        </div>
+        <svg id="profileIcon" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 24 24" style="display: block; margin: 10px auto 20px; width: 80px; height: 80px;"><path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.2c-3.1 0-9.3 1.6-9.3 4.9v2.4h18.6v-2.4c0-3.3-6.2-4.9-9.3-4.9z"/></svg>
+
+        <div style="overflow-x:auto;">
+          <table class="table table-bordered table-sm mb-3">
+            <tbody>
+              <tr><th>Full Name</th><td id="tdFullName"></td><td><button class="btn btn-sm btn-primary editBtn" data-field="fullName"><i class="fas fa-edit"></i> Edit</button></td></tr>
+              <tr><th>Username</th><td id="tdUsername"></td><td><button class="btn btn-sm btn-primary editBtn" data-field="username"><i class="fas fa-edit"></i> Edit</button></td></tr>
+              <tr><th>Phone</th><td id="tdPhone"></td><td><button class="btn btn-sm btn-primary editBtn" data-field="phone"><i class="fas fa-edit"></i> Edit</button></td></tr>
+              <tr><th>ID No</th><td id="tdIDNo"></td><td>—</td></tr>
+              <tr><th>Email</th><td id="tdEmail"></td><td>—</td></tr>
+              <tr><th>Profile Status</th><td id="tdProfileStatus"></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-danger w-100" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+
+      <footer>
+        <p>© Riyad Hassan Bio — All Rights Reserved</p>
+      </footer>
+    </div>
+
+    <!-- ব্যাক টু টপ বাটন -->
+    <div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
   </div>
 
-  <!-- Back to top button -->
-  <div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+  <!-- Bootstrap মডাল: Signup/Login ফর্ম -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="authModalLabel"><i class="fas fa-user-circle"></i> Signup / Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- সাইনআপ ফর্ম -->
+          <div id="signupDiv">
+            <h6 class="text-center">Signup</h6>
+            <input type="text" id="fullName" class="form-control mb-2" placeholder="Full Name">
+            <input type="text" id="username" class="form-control mb-2" placeholder="Username">
+            <input type="text" id="phone" class="form-control mb-2" placeholder="Phone">
+            <input type="email" id="email" class="form-control mb-2" placeholder="Email">
+            <div class="password-wrapper mb-2">
+              <input type="password" id="password" class="form-control" placeholder="Password">
+              <svg id="toggleSignupPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path id="signupEye" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path id="signupEyeOutline" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.065 7-9.542 7s-8.268-2.943-9.542-7z"/>
+                <line id="signupSlash" x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="2" style="display:none"/>
+              </svg>
+            </div>
+            <div id="passwordRules">
+              Password must contain:
+              <ul>
+                <li>At least 8 characters</li>
+                <li>1 uppercase letter (A-Z)</li>
+                <li>1 lowercase letter (a-z)</li>
+                <li>1 number (0-9)</li>
+                <li>1 special character (@$!%*?&)</li>
+              </ul>
+            </div>
+            <button class="btn btn-primary w-100" id="signupBtn"><i class="fas fa-user-plus"></i> Signup</button>
+            <p class="text-center mt-2">Already have an account? <span class="text-link" id="showLoginLink" style="cursor:pointer; color:blue;">Login here</span></p>
+          </div>
 
-  <script>
-    (function() {
-      // back to top visibility
-      const backBtn = document.getElementById('backToTop');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-          backBtn.classList.add('visible');
+          <!-- লগইন ফর্ম (প্রাথমিকভাবে লুকানো) -->
+          <div id="loginDiv" style="display: none;">
+            <h6 class="text-center">Login</h6>
+            <input type="email" id="loginEmail" class="form-control mb-2" placeholder="Email">
+            <div class="password-wrapper mb-2">
+              <input type="password" id="loginPass" class="form-control" placeholder="Password">
+              <svg id="toggleLoginPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path id="loginEye" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path id="loginEyeOutline" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.065 7-9.542 7s-8.268-2.943-9.542-7z"/>
+                <line id="loginSlash" x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="2" style="display:none"/>
+              </svg>
+            </div>
+            <button class="btn btn-success w-100" id="loginBtn"><i class="fas fa-key"></i> Login</button>
+            <p class="text-center mt-2">Don't have an account? <span class="text-link" id="backSignupLink" style="cursor:pointer; color:blue;">Sign Up</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+    import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+    // Firebase কনফিগারেশন
+    const firebaseConfig = {
+      apiKey: "AIzaSyCUedI7nd4-qBDBPQQlNReEZmy18BSgGYA",
+      authDomain: "useradminservice.firebaseapp.com",
+      databaseURL: "https://useradminservice-default-rtdb.firebaseio.com/",
+      projectId: "useradminservice",
+      storageBucket: "useradminservice.firebasestorage.app",
+      messagingSenderId: "767073548166",
+      appId: "1:767073548166:web:a3dbfaed202a13d9b75e07"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // DOM এলিমেন্ট
+    const authToggleBtn = document.getElementById('authToggleBtn');
+    const profileNavLink = document.getElementById('profileNavLink');
+    const profileDiv = document.getElementById('profileDiv');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const signupDiv = document.getElementById('signupDiv');
+    const loginDiv = document.getElementById('loginDiv');
+    const showLoginLink = document.getElementById('showLoginLink');
+    const backSignupLink = document.getElementById('backSignupLink');
+
+    const signupBtn = document.getElementById('signupBtn');
+    const loginBtn = document.getElementById('loginBtn');
+
+    const tdFullName = document.getElementById('tdFullName');
+    const tdUsername = document.getElementById('tdUsername');
+    const tdPhone = document.getElementById('tdPhone');
+    const tdEmail = document.getElementById('tdEmail');
+    const tdProfileStatus = document.getElementById('tdProfileStatus');
+    const tdIDNo = document.getElementById('tdIDNo');
+
+    // মডাল বন্ধ করার জন্য (Bootstrap)
+    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+
+    // ফর্ম টগল
+    showLoginLink.addEventListener('click', () => {
+      signupDiv.style.display = 'none';
+      loginDiv.style.display = 'block';
+    });
+    backSignupLink.addEventListener('click', () => {
+      loginDiv.style.display = 'none';
+      signupDiv.style.display = 'block';
+    });
+
+    // লোডার ফাংশন
+    function showLoader(button) {
+      button.disabled = true;
+      button.dataset.originalText = button.innerHTML;
+      button.innerHTML = '<span class="loader"></span>';
+    }
+    function hideLoader(button) {
+      button.disabled = false;
+      button.innerHTML = button.dataset.originalText;
+    }
+
+    // সাইনআপ
+    signupBtn.addEventListener('click', () => {
+      const fullName = document.getElementById('fullName').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!fullName || !username || !phone || !email || !password) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+      if (!strongPasswordRegex.test(password)) {
+        alert("Password is not strong enough.");
+        return;
+      }
+
+      showLoader(signupBtn);
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          const uid = userCredential.user.uid;
+          set(ref(db, 'users/' + uid), {
+            fullName,
+            username,
+            phone,
+            email,
+            status: 'approved', // পরীক্ষার জন্য approved
+            rating: 0,
+            profileStatus: 'New',
+            signupTime: Date.now()
+          }).then(() => {
+            alert('Signup successful! You can now login.');
+            hideLoader(signupBtn);
+            signupDiv.style.display = 'none';
+            loginDiv.style.display = 'block';
+          });
+        })
+        .catch(error => {
+          alert(error.message);
+          hideLoader(signupBtn);
+        });
+    });
+
+    // লগইন
+    loginBtn.addEventListener('click', () => {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPass').value;
+      showLoader(loginBtn);
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          const uid = userCredential.user.uid;
+          get(ref(db, 'users/' + uid)).then(snapshot => {
+            if (snapshot.exists() && snapshot.val().status === 'approved') {
+              const user = snapshot.val();
+              tdFullName.innerText = user.fullName;
+              tdUsername.innerText = user.username;
+              tdPhone.innerText = user.phone;
+              tdEmail.innerText = user.email;
+              tdProfileStatus.innerText = user.profileStatus || 'New';
+              tdIDNo.innerText = user.idNo || '—';
+              profileDiv.dataset.uid = uid;
+
+              // বাটন পরিবর্তন
+              authToggleBtn.style.display = 'none';
+              profileNavLink.style.display = 'flex';
+              updateProfileStars(user.rating || 0);
+
+              // মডাল বন্ধ করো
+              authModal.hide();
+              hideLoader(loginBtn);
+            } else {
+              alert('Admin has not approved your account yet.');
+              signOut(auth);
+              hideLoader(loginBtn);
+            }
+          });
+        })
+        .catch(error => {
+          alert(error.message);
+          hideLoader(loginBtn);
+        });
+    });
+
+    // লগআউট
+    logoutBtn.addEventListener('click', () => {
+      signOut(auth).then(() => {
+        profileNavLink.style.display = 'none';
+        authToggleBtn.style.display = 'flex';
+        profileDiv.style.display = 'none'; // প্রোফাইল ডিভ লুকাও
+        document.querySelectorAll('section').forEach(s => s.style.display = 'block'); // সেকশন দেখাও
+      });
+    });
+
+    // এডিট বাটন
+    document.querySelectorAll('.editBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const field = btn.dataset.field;
+        const td = document.getElementById('td' + field.charAt(0).toUpperCase() + field.slice(1));
+        if (btn.innerHTML.includes('Edit')) {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = td.innerText;
+          input.className = 'form-control form-control-sm';
+          td.innerHTML = '';
+          td.appendChild(input);
+          btn.innerHTML = '<i class="fas fa-save"></i> Save';
         } else {
-          backBtn.classList.remove('visible');
+          const input = td.querySelector('input');
+          const newValue = input.value;
+          const uid = profileDiv.dataset.uid;
+          const updateData = {};
+          updateData[field] = newValue;
+          update(ref(db, 'users/' + uid), updateData).then(() => {
+            td.innerText = newValue;
+            btn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+          });
         }
       });
-      backBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+    });
 
-      // open social links in new tab
-      document.querySelectorAll('.social-circle').forEach(link => {
-        link.setAttribute('target', '_blank');
+    // পাসওয়ার্ড টগল
+    document.getElementById('toggleSignupPassword').addEventListener('click', () => {
+      const pwd = document.getElementById('password');
+      pwd.type = pwd.type === 'password' ? 'text' : 'password';
+      document.getElementById('signupSlash').style.display = pwd.type === 'text' ? 'block' : 'none';
+    });
+    document.getElementById('toggleLoginPassword').addEventListener('click', () => {
+      const pwd = document.getElementById('loginPass');
+      pwd.type = pwd.type === 'password' ? 'text' : 'password';
+      document.getElementById('loginSlash').style.display = pwd.type === 'text' ? 'block' : 'none';
+    });
+
+    // রেটিং তারকা
+    const profileStars = document.querySelectorAll('#profileStars .star');
+    function updateProfileStars(rating) {
+      profileStars.forEach(star => {
+        star.setAttribute('fill', parseInt(star.dataset.value) <= rating ? 'gold' : 'gray');
       });
-    })();
+    }
+
+    // প্রোফাইল লিংকে ক্লিক করলে প্রোফাইল টগল
+    profileNavLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (profileDiv.style.display === 'none') {
+        document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+        profileDiv.style.display = 'block';
+      } else {
+        document.querySelectorAll('section').forEach(s => s.style.display = 'block');
+        profileDiv.style.display = 'none';
+      }
+    });
+
+    // ব্যাক টু টপ
+    const backBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backBtn.classList.add('visible');
+      } else {
+        backBtn.classList.remove('visible');
+      }
+    });
+    backBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // বৃষ্টি তৈরি
+    const rainContainer = document.getElementById('rainContainer');
+    function createRain() {
+      rainContainer.innerHTML = '';
+      const numberOfDrops = 150;
+      for (let i = 0; i < numberOfDrops; i++) {
+        const drop = document.createElement('div');
+        drop.classList.add('raindrop');
+        drop.style.left = Math.random() * 100 + '%';
+        drop.style.animationDuration = (Math.random() * 1.2 + 0.8) + 's';
+        drop.style.animationDelay = Math.random() * 5 + 's';
+        drop.style.height = (Math.random() * 10 + 8) + 'px';
+        drop.style.opacity = Math.random() * 0.5 + 0.3;
+        rainContainer.appendChild(drop);
+      }
+    }
+    createRain();
   </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                                                                      </html>
