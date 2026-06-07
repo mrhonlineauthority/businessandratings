@@ -1,220 +1,416 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>অর্ডার ফর্ম</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body {
-    font-family: 'Times New Roman', times-new-roman;
-    background: linear-gradient(120deg, #ffe6f0, #f6f6f6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-  }
-  .form-container {
-    background: #fff;
-    padding: 60px 30px 30px 30px;
-    border-radius: 20px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-    max-width: 450px;
-    width: 100%;
-    position: relative;
-    transition: all 0.3s ease;
-  }
-  .form-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 35px rgba(0,0,0,0.25);
-  }
-  h2 {
-    text-align: center;
-    color: #d60055;
-    margin-bottom: 30px;
-    font-size: 28px;
-  }
-  .input-group { margin-bottom: 18px; }
-  .input-group label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 6px;
-    color: #333;
-    font-weight: 500;
-  }
-  .input-group input, 
-  .input-group select, 
-  .input-group textarea {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    transition: 0.3s;
-  }
-  .input-group input:focus,
-  .input-group select:focus,
-  .input-group textarea:focus {
-    border-color: #d60055;
-    box-shadow: 0 0 8px rgba(214,0,85,0.3);
-    outline: none;
-  }
-  .order-btn {
-    background: #d60055;
-    color: #fff;
-    border: none;
-    padding: 15px;
-    width: 100%;
-    border-radius: 12px;
-    font-size: 17px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
-  }
-  .order-btn:hover {
-    background: #b00045;
-    transform: translateY(-2px);
-  }
-  .help-icon {
-    position: absolute;
-    top: -25px;
-    right: 25px;
-    background: #d60055;
-    color: #fff;
-    font-size: 22px;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .help-icon:hover {
-    background: #b00045;
-    transform: scale(1.15);
-  }
-  .success-box {
-    display:none;
-    background:white;
-    padding:40px 30px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 15px 30px rgba(0,0,0,0.2);
-    max-width:400px;
-    width:100%;
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-    z-index:10;
-  }
-  .success-box i {
-    font-size:70px; 
-    color:#28a745; 
-    margin-bottom:20px; 
-  }
-  .success-box h2 { margin-bottom:10px; font-size:26px; }
-  .success-box p { margin:5px 0; font-size:16px; color:#555; }
-  .back-btn {
-    display:inline-block;
-    margin-top:20px;
-    background:#d60055;
-    color:white;
-    padding:12px 25px;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:500;
-    transition:0.3s;
-  }
-  .back-btn:hover{ background:#b00045; }
-  @media(max-width:600px){
-    .form-container{ padding:70px 20px 20px 20px; }
-    .help-icon{ top:-20px; right:20px; width:50px; height:50px; font-size:20px; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রফেশনাল অর্ডার সিস্টেম</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --success-color: #10b981;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            font-size: 24px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: #e5e7eb;
+            color: var(--text-color);
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .optional {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        button.btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button.btn-submit:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Order Slip Styling */
+        #order-slip {
+            border: 2px dashed #cbd5e1;
+            padding: 25px;
+            border-radius: 8px;
+            background: #fff;
+            margin-top: 20px;
+        }
+
+        .slip-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .slip-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--success-color);
+        }
+
+        .slip-details table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .slip-details td {
+            padding: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .slip-details td:first-child {
+            font-weight: 600;
+            color: #64748b;
+            width: 40%;
+        }
+
+        .btn-print {
+            background: #334155;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Status Result Box */
+        .status-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .status-box p {
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .status-box strong {
+            color: var(--primary-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Print Media Query for A4 Page */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #order-slip, #order-slip * {
+                visibility: visible;
+            }
+            #order-slip {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                padding: 0;
+            }
+            .btn-print {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="form-container" id="formContainer">
-  <div class="help-icon" onclick="window.location.href='https://mrhonlineauthority.github.io/mrhhelplinehome'">
-    <i class="fa-solid fa-headset"></i>
-  </div>
-
-  <h2>অর্ডার ফর্ম</h2>
-  <form id="orderForm">
-    <div class="input-group"><label>নাম</label><input type="text" name="name" required></div>
-    <div class="input-group"><label>মোবাইল</label><input type="text" name="mobile" required></div>
-    <div class="input-group"><label>জেলা</label><input type="text" name="district" required></div>
-    <div class="input-group"><label>উপজেলা</label><input type="text" name="upazila" required></div>
-    <div class="input-group"><label>ডেলিভারি ঠিকানা</label><textarea name="address" required></textarea></div>
-    <div class="input-group"><label>কালার/সাইজ (অপশনাল)</label><input type="text" name="colorSize"></div>
-    <div class="input-group"><label>ডেলিভারি চার্জ</label><input type="text" name="price" required></div>
-    <div class="input-group">
-      <label>ডেলিভারি পেমেন্ট</label>
-      <select name="payment" required>
-        <option value="">একটি নির্বাচন করুন</option>
-        <option value="বিকাশ">বিকাশ</option>
-        <option value="নগদ">নগদ</option>
-      </select>
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('order-section')">অর্ডার ফর্ম</button>
+        <button class="tab-btn" onclick="switchTab('check-section')">অর্ডার চেক করুন</button>
     </div>
-    <div class="input-group"><label>প্রোডাক্ট লিংক (অপশনাল)</label><input type="text" name="productLink"></div>
-    <button type="submit" class="order-btn">অর্ডার করুন</button>
-  </form>
-</div>
 
-<div class="success-box" id="successBox">
-  <i class="fa-solid fa-circle-check"></i>
-  <h2>আপনার অর্ডার কনফার্ম হয়েছে!</h2>
-  <div id="orderDetails"></div>
-  <a href="#" class="back-btn" id="closeBtn">ফিরে যান</a>
-</div>
+    <div id="order-section" class="container">
+        <h2>নতুন অর্ডার ফর্ম</h2>
+        <form id="orderForm" onsubmit="submitOrder(event)">
+            <div class="form-group">
+                <label>কাস্টমার নাম <span style="color:red">*</span></label>
+                <input type="text" id="custName" required placeholder="আপনার নাম লিখুন">
+            </div>
+            <div class="form-group">
+                <label>কাস্টমার নম্বর <span style="color:red">*</span></label>
+                <input type="tel" id="custPhone" required placeholder="01XXXXXXXXX">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>বিভাগ <span style="color:red">*</span></label>
+                    <input type="text" id="division" required placeholder="যেমন: ঢাকা">
+                </div>
+                <div class="form-group">
+                    <label>জেলা <span style="color:red">*</span></label>
+                    <input type="text" id="district" required placeholder="যেমন: মিরপুর">
+                </div>
+            </div>
 
-<script>
-(function(){ emailjs.init("q5FOEaFMz8j-UzOMV"); })();
+            <div class="form-group">
+                <label>উপজেলা <span style="color:red">*</span></label>
+                <input type="text" id="upazila" required placeholder="যেমন: পল্লবী">
+            </div>
 
-// অর্ডার নম্বর তৈরির ফাংশন (২০ ডিজিট)
-function generateOrderNumber(){
-  let num = '';
-  for(let i=0; i<20; i++){
-    num += Math.floor(Math.random() * 10);
-  }
-  return num;
-}
+            <div class="form-group">
+                <label>ডেলিভারি ঠিকানা <span style="color:red">*</span></label>
+                <textarea id="address" rows="3" required placeholder="রোড নম্বর, বাসা নম্বর, এলাকা..."></textarea>
+            </div>
 
-document.getElementById("orderForm").addEventListener("submit", function(e){
-  e.preventDefault();
-  const form = this;
-  const orderNumber = generateOrderNumber(); // ✅ ২০ ডিজিটের অর্ডার নম্বর
+            <div class="form-row">
+                <div class="form-group">
+                    <label>প্রডাক্ট কালার <span class="optional">(ঐচ্ছিক)</span></label>
+                    <input type="text" id="prodColor" placeholder="যেমন: লাল, কালো">
+                </div>
+                <div class="form-group">
+                    <label>প্রডাক্ট সাইজ <span class="optional">(ঐচ্ছিক)</span></label>
+                    <input type="text" id="prodSize" placeholder="যেমন: M, L, XL">
+                </div>
+            </div>
 
-  emailjs.sendForm("service_ua9oy2k", "template_qb7nnrv", form)
-  .then(() => {
-    document.getElementById("formContainer").style.display = "none";
-    const successBox = document.getElementById("successBox");
-    successBox.style.display = "block";
+            <div class="form-group">
+                <label>প্রডাক্ট লিংক <span class="optional">(ঐচ্ছিক)</span></label>
+                <input type="url" id="prodLink" placeholder="https://example.com/product">
+            </div>
 
-    const formData = {};
-    new FormData(form).forEach((value,key) => formData[key] = value);
-    const detailsDiv = document.getElementById("orderDetails");
-    let html = `<p><strong>নাম:</strong> ${formData.name}</p>`;
-    html += `<p><strong>মোবাইল:</strong> ${formData.mobile}</p>`;
-    html += `<p><strong>অর্ডার নম্বর:</strong> ${orderNumber}</p>`;
-    detailsDiv.innerHTML = html;
-  }, (error) => {
-    alert("ইমেইল পাঠাতে সমস্যা হয়েছে:\n" + JSON.stringify(error));
-  });
-});
+            <button type="submit" class="btn-submit">কনফার্ম করুন</button>
+        </form>
 
-document.getElementById("closeBtn").addEventListener("click", function(e){
-  e.preventDefault();
-  location.reload();
-});
-</script>
+        <div id="order-slip" class="hidden">
+            <div class="slip-header">
+                <div class="slip-title">অর্ডার স্লিপ</div>
+                <p>আমাদের উপর আস্থা রাখার জন্য ধন্যবাদ!</p>
+            </div>
+            <div class="slip-details">
+                <table>
+                    <tr><td>অর্ডার নম্বর:</td><td id="slipOrderId" style="font-weight: bold; color: var(--primary-color);"></td></tr>
+                    <tr><td>তারিখ ও সময়:</td><td id="slipDateTime"></td></tr>
+                    <tr><td>নাম:</td><td id="slipName"></td></tr>
+                    <tr><td>মোবাইল নম্বর:</td><td id="slipPhone"></td></tr>
+                    <tr><td>ঠিকানা:</td><td id="slipAddr"></td></tr>
+                    <tr><td>কালার ও সাইজ:</td><td id="slipMeta"></td></tr>
+                    <tr><td>প্রডাক্ট লিংক:</td><td id="slipLink"></td></tr>
+                </table>
+            </div>
+            <button class="btn-print" onclick="window.print()">স্লিপ প্রিন্ট করুন (A4)</button>
+        </div>
+    </div>
 
+    <div id="check-section" class="container hidden">
+        <h2>আপনার অর্ডার ট্র্যাক করুন</h2>
+        <form id="checkForm" onsubmit="checkOrderStatus(event)">
+            <div class="form-group">
+                <label>কাস্টমার নম্বর <span style="color:red">*</span></label>
+                <input type="tel" id="checkPhone" required placeholder="আপনার মোবাইল নম্বর দিন">
+            </div>
+            <div class="form-group">
+                <label>১০ ডিজিটের অর্ডার নম্বর <span style="color:red">*</span></label>
+                <input type="text" id="checkOrderId" required placeholder="যেমন: ৪৭৫৮৯৬৩২১৪">
+            </div>
+            <button type="submit" class="btn-submit" style="background: var(--success-color);">চেক করুন</button>
+        </form>
+
+        <div id="statusResult" class="status-box hidden">
+            <p><strong>অর্ডার স্ট্যাটাস:</strong> <span id="statusText">Processing</span></p>
+            <p><strong>এডমিন নোট:</strong> <span id="adminNote">-</span></p>
+        </div>
+    </div>
+
+    <script>
+        // এখানে আপনার তৈরি করা Google Web App URL টি বসাবেন
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7JY4wvy-Cvly2_JSaSay704H4ktnfg9m5myL--V9jOFBdgCExNiOd5CvwU-i5f5ne/exec";
+
+        function switchTab(tabId) {
+            document.getElementById('order-section').classList.add('hidden');
+            document.getElementById('check-section').classList.add('hidden');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
+
+        // ইউনিক ১০ ডিজিটের অর্ডার আইডি জেনারেটর
+        function generateOrderId() {
+            return Math.floor(1000000000 + Math.random() * 9000000000).toString();
+        }
+
+        // অর্ডার সাবমিট ফাংশন
+        function submitOrder(e) {
+            e.preventDefault();
+            
+            const orderId = generateOrderId();
+            const currentDateTime = new Date().toLocaleString('bn-BD', { hour12: true });
+
+            const orderData = {
+                action: "addOrder",
+                orderId: orderId,
+                dateTime: currentDateTime,
+                name: document.getElementById('custName').value,
+                phone: document.getElementById('custPhone').value,
+                division: document.getElementById('division').value,
+                district: document.getElementById('district').value,
+                upazila: document.getElementById('upazila').value,
+                address: document.getElementById('address').value,
+                color: document.getElementById('prodColor').value || 'N/A',
+                size: document.getElementById('prodSize').value || 'N/A',
+                link: document.getElementById('prodLink').value || 'N/A',
+                status: "Pending", // ডিফল্ট স্ট্যাটাস
+                note: "আপনার অর্ডারটি গ্রহণ করা হয়েছে।" // ডিফল্ট নোট
+            };
+
+            // স্লিপে ডেটা সেট করা
+            document.getElementById('slipOrderId').innerText = orderData.orderId;
+            document.getElementById('slipDateTime').innerText = orderData.dateTime;
+            document.getElementById('slipName').innerText = orderData.name;
+            document.getElementById('slipPhone').innerText = orderData.phone;
+            document.getElementById('slipAddr').innerText = `${orderData.address}, ${orderData.upazila}, ${orderData.district}, ${orderData.division}`;
+            document.getElementById('slipMeta').innerText = `কালার: ${orderData.color} | সাইজ: ${orderData.size}`;
+            document.getElementById('slipLink').innerText = orderData.link;
+
+            // গুগল শিটে ডেটা পাঠানো
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(orderData)
+            }).then(() => {
+                alert("অর্ডারটি সফলভাবে সাবমিট হয়েছে!");
+                document.getElementById('order-slip').classList.remove('hidden');
+                document.getElementById('orderForm').reset();
+            }).catch(err => {
+                alert("দুঃখিত, কোনো সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+                console.error(err);
+            });
+        }
+
+        // অর্ডার স্ট্যাটাস চেক ফাংশن
+        function checkOrderStatus(e) {
+            e.preventDefault();
+            const phone = document.getElementById('checkPhone').value;
+            const orderId = document.getElementById('checkOrderId').value;
+
+            document.getElementById('statusResult').classList.add('hidden');
+
+            fetch(`${GOOGLE_SCRIPT_URL}?action=checkOrder&phone=${phone}&orderId=${orderId}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "error") {
+                    alert("সঠিক অর্ডার নম্বর বা মোবাইল নম্বর দিন।");
+                } else {
+                    document.getElementById('statusText').innerText = data.orderStatus;
+                    document.getElementById('adminNote').innerText = data.note;
+                    document.getElementById('statusResult').classList.remove('hidden');
+                }
+            }).catch(err => {
+                alert("তথ্যটি খুঁজে পাওয়া যায়নি।");
+                console.error(err);
+            });
+        }
+    </script>
 </body>
 </html>
